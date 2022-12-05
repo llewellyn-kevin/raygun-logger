@@ -40,7 +40,6 @@ If you discover any security related issues, please email llewellynkevin1@gmail.
 
 ## Credits
 
-- [Kevin Llewellyn](https://github.com/llewellyn-kevin)
 - [All Contributors](../../contributors)
 
 ## License
