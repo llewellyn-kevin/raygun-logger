@@ -1,10 +1,10 @@
-# Very short description of the package
+# Laravel package for logging errors to [Raygun](https://raygun.com/)
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/llewellyn-kevin/raygun-logger.svg?style=flat-square)](https://packagist.org/packages/llewellyn-kevin/raygun-logger)
 [![Total Downloads](https://img.shields.io/packagist/dt/llewellyn-kevin/raygun-logger.svg?style=flat-square)](https://packagist.org/packages/llewellyn-kevin/raygun-logger)
 ![GitHub Actions](https://github.com/llewellyn-kevin/raygun-logger/actions/workflows/main.yml/badge.svg)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+This package is designed to allow you to easily add raygun to your logging stack.
 
 ## Installation
 
@@ -40,8 +40,8 @@ If you discover any security related issues, please email llewellynkevin1@gmail.
 
 ## Credits
 
--   [Kevin Llewellyn](https://github.com/llewellyn-kevin)
--   [All Contributors](../../contributors)
+- [Kevin Llewellyn](https://github.com/llewellyn-kevin)
+- [All Contributors](../../contributors)
 
 ## License
 
