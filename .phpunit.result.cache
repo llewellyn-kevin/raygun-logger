@@ -1,1 +1,1 @@
-{"version":1,"defects":[],"times":{"\/Users\/Kevin\/Documents\/outreach\/raygun-logger\/tests\/ExampleTest.php::example":0.015}}
+{"version":1,"defects":{"\/Users\/Kevin\/Documents\/outreach\/raygun-logger\/tests\/Services\/MetaServiceTest.php::it":3},"times":{"\/Users\/Kevin\/Documents\/outreach\/raygun-logger\/tests\/ExampleTest.php::example":0.136,"\/Users\/Kevin\/Documents\/outreach\/raygun-logger\/tests\/Services\/MetaServiceTest.php::it":0.027}}
