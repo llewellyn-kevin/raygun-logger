@@ -5,4 +5,7 @@
  */
 return [
     'level' => 'ERROR',
+    'blacklist' => [
+        // Add exceptions raygun should ignore heer.
+    ],
 ];

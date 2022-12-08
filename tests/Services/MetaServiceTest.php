@@ -29,9 +29,32 @@ dataset('logLevels', [
 
 it('only_logs_at_appropriate_levels', function (string $configLevel, array $shouldLog, array $shouldNotLog) {
     config()->set('raygun-logger.level', $configLevel);
-    collect($shouldLog)->each(fn ($level) => expect($this->raygunService->shouldLog($level))->toBe(true));
-    collect($shouldNotLog)->each(fn ($level) => expect($this->raygunService->shouldLog($level))->toBe(false));
+    config()->set('raygun-logger.blacklist', []);
+    collect($shouldLog)->each(fn ($level) => expect($this->raygunService->shouldLog($level))->toBeTrue());
+    collect($shouldNotLog)->each(fn ($level) => expect($this->raygunService->shouldLog($level))->toBeFalse());
 })->with('logLevels');
+
+it('only_logs_exceptions_not_on_blacklist', function () {
+    $blacklist = [
+        \Exception::class,
+        \Illuminate\Auth\Access\AuthorizationException::class,
+    ];
+    $whitelist = [
+        \Illuminate\Auth\AuthenticationException::class,
+    ];
+
+    config()->set('raygun-logger.level', 'DEBUG');
+    config()->set('raygun-logger.blacklist', $blacklist);
+
+    collect($whitelist)->each(
+        fn (string $exception) => expect($this->raygunService->shouldLog('ERROR', new $exception('test')))
+            ->toBeTrue()
+    );
+    collect($blacklist)->each(
+        fn (string $exception) => expect($this->raygunService->shouldLog('ERROR', new $exception('test')))
+            ->toBeFalse()
+    );
+});
 
 it('gets_current_tags_for_an_exception', function () {
     App::shouldReceive('environment')->andReturn('test');
