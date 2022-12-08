@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraBug\Commands;
+namespace LlewellynKevin\RaygunLogger\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
