@@ -8,7 +8,7 @@ return [
     'api_key' => env('RAYGUN_API_KEY'),
 
     'level' => 'ERROR',
-    'environmnets' => [
+    'environments' => [
         'production',
         'staging',
     ],
