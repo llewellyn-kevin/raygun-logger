@@ -6,6 +6,8 @@
 >
     <php>
         <env name="APP_ENV" value="TESTING" />
+        <env name="RAYGUN_BASE_URI" value="https://test.url.com/" />
+        <env name="RAYGUN_API_KEY" value="fakekey" />
     </php>
     <testsuites>
         <testsuite name="Test Suite">

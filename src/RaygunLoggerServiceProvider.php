@@ -3,6 +3,12 @@
 namespace LlewellynKevin\RaygunLogger;
 
 use Illuminate\Support\ServiceProvider;
+use LlewellynKevin\RaygunLogger\Contracts\RaygunMetaService;
+use LlewellynKevin\RaygunLogger\Http\Client;
+use LlewellynKevin\RaygunLogger\Loggers\RaygunHandler;
+use LlewellynKevin\RaygunLogger\Services\MetaService;
+use Raygun4php\RaygunClient;
+use Raygun4php\Transports\GuzzleAsync;
 
 class RaygunLoggerServiceProvider extends ServiceProvider
 {
@@ -19,6 +25,11 @@ class RaygunLoggerServiceProvider extends ServiceProvider
             // Registering package commands.
             // $this->commands([]);
         }
+
+        // Any requests to Raygun server will be send right before shutdown.
+        register_shutdown_function([
+            $this->app->make(GuzzleAsync::class), 'wait'
+        ]);
     }
 
     /**
@@ -29,9 +40,31 @@ class RaygunLoggerServiceProvider extends ServiceProvider
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'raygun-logger');
 
+        // Bind public interfaces
+        $this->app->bind(RaygunMetaService::class, MetaService::class);
+
         // Register the main class to use with the facade
         $this->app->singleton('raygun-logger', function () {
             return new RaygunLogger;
         });
+
+        // Register the async transport.
+        $this->app->singleton(GuzzleAsync::class, function ($app) {
+            return (new Client)->getClient();
+        });
+
+        // Register the RaygunClient instance.
+        $this->app->singleton(RaygunClient::class, function ($app) {
+            return new RaygunClient($app->make(GuzzleAsync::class));
+        });
+
+        // Extend the application logger so raygun can be added
+        if ($this->app['log'] instanceof \Illuminate\Log\LogManager) {
+            $this->app['log']->extend('raygun', function ($app, $config) {
+                $handler = new RaygunHandler($app['raygun-logger']);
+
+                return new Logger('raygun', [$handler]);
+            });
+        }
     }
 }
