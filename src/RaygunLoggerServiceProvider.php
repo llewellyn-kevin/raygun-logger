@@ -26,7 +26,7 @@ class RaygunLoggerServiceProvider extends ServiceProvider
 
             // Registering package commands.
             $this->commands([
-                TextException::class,
+                TestException::class,
             ]);
         }
 
