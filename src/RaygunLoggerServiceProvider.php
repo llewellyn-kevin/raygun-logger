@@ -7,6 +7,7 @@ use LlewellynKevin\RaygunLogger\Contracts\RaygunMetaService;
 use LlewellynKevin\RaygunLogger\Http\Client;
 use LlewellynKevin\RaygunLogger\Loggers\RaygunHandler;
 use LlewellynKevin\RaygunLogger\Services\MetaService;
+use LlewellynKevin\RaygunLogger\Commands\TestException;
 use Monolog\Logger;
 use Raygun4php\RaygunClient;
 use Raygun4php\Transports\GuzzleAsync;
@@ -24,7 +25,9 @@ class RaygunLoggerServiceProvider extends ServiceProvider
             ], 'config');
 
             // Registering package commands.
-            // $this->commands([]);
+            $this->commands([
+                TextException::class,
+            ]);
         }
 
         // Any requests to Raygun server will be send right before shutdown.
