@@ -31,7 +31,12 @@ class TestException extends Command
                 $this->generateException()
             );
 
-            dd($response);
+            if (!$response) {
+                $this->error('✗ Could not make a raygun request with current settings. Please review and try again.');
+                return;
+            }
+
+            $this->info('✓ Completed raygun request');
         } catch (\Exception $ex) {
             $this->error("✗ {$ex->getMessage()}");
         }
@@ -40,7 +45,7 @@ class TestException extends Command
     public function generateException(): ?Exception
     {
         try {
-            throw new Exception($this->argument('exception') ?? 'This is a test exception from the LaraBug console');
+            throw new Exception($this->argument('exception') ?? 'RaygunLogger Exception. It\'s working! :)');
         } catch (Exception $ex) {
             return $ex;
         }
