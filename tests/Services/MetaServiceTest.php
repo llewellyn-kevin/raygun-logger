@@ -27,14 +27,14 @@ dataset('logLevels', [
     'Emergency' => [LogLevel::EMERGENCY, [LogLevel::EMERGENCY], [LogLevel::DEBUG, LogLevel::INFO, LogLevel::NOTICE, LogLevel::WARNING, LogLevel::ERROR, LogLevel::CRITICAL, LogLevel::ALERT]],
 ]);
 
-it('only_logs_at_appropriate_levels', function (string $configLevel, array $shouldLog, array $shouldNotLog) {
+it('only logs at appropriate levels', function (string $configLevel, array $shouldLog, array $shouldNotLog) {
     config()->set('raygun-logger.level', $configLevel);
     config()->set('raygun-logger.blacklist', []);
     collect($shouldLog)->each(fn ($level) => expect($this->raygunService->shouldLog($level))->toBeTrue());
     collect($shouldNotLog)->each(fn ($level) => expect($this->raygunService->shouldLog($level))->toBeFalse());
 })->with('logLevels');
 
-it('only_logs_exceptions_not_on_blacklist', function () {
+it('only logs exceptions not on blacklist', function () {
     $blacklist = [
         \Exception::class,
         \Illuminate\Auth\Access\AuthorizationException::class,
@@ -56,18 +56,18 @@ it('only_logs_exceptions_not_on_blacklist', function () {
     );
 });
 
-it('gets_current_tags_for_an_exception', function () {
+it('gets current tags for an exception', function () {
     App::shouldReceive('environment')->andReturn('test');
 
     expect($this->raygunService->getTags($this->exception))->toBe(['test']);
 });
 
-it('returns_null_for_the_current_user_if_none_authorized', function () {
+it('returns null for the current user if none authorized', function () {
     expect($this->raygunService->getUser($this->exception)->toArray())
         ->toBe(RaygunUser::anonymous()->toArray());
 });
 
-it('returns_details_about_the_current_user', function () {
+it('returns details about the current user', function () {
     $user = User::make();
     $user->name = 'Taylor Otwell';
     $user->email =  'totwell@laravel.com';

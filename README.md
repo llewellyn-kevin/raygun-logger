@@ -95,7 +95,11 @@ php artisan vendor:publish --tag=config
 You may wish to specify the log levels for various exceptions in your application. You can register these levels in the `RaygunLogger` facade:
 
 ```php
-RaygunLogger::level(Exception::class, LogLevel::CRITICAL);
+use LlewellynKevin\RaygunLogger\Facades\RaygunLogger;
+
+// ...
+
+RaygunLogger::level(AuthorizationException::class, LogLevel::CRITICAL);
 ```
 
 Then you may update the `raygun-logger` config with the base level you wish to report on. Only exceptions with the specified level or higher will be sent to Raygun.

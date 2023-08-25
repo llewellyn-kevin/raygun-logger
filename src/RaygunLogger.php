@@ -4,18 +4,19 @@ namespace LlewellynKevin\RaygunLogger;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
-use LlewellynKevin\RaygunLogger\Contracts\RaygunMetaService;
+use LlewellynKevin\RaygunLogger\Contracts\RaygunClientContract;
+use LlewellynKevin\RaygunLogger\Contracts\RaygunLoggerContract;
+use LlewellynKevin\RaygunLogger\Contracts\RaygunMetaServiceContract;
 use Psr\Log\LogLevel;
-use Raygun4php\RaygunClient;
 use Throwable;
 
-class RaygunLogger
+class RaygunLogger implements RaygunLoggerContract
 {
     protected array $levels = [];
 
     public function __construct(
-        public RaygunMetaService $metaService,
-        public RaygunClient $client,
+        public RaygunMetaServiceContract $metaService,
+        public RaygunClientContract $client,
     ) {
     }
 
