@@ -8,7 +8,7 @@ use LlewellynKevin\RaygunLogger\DataObjects\RaygunUser;
 use Monolog\Logger;
 use Throwable;
 
-interface RaygunMetaService
+interface RaygunMetaServiceContract
 {
     public function shouldLog(string|int $level, ?Throwable $exception = null): bool;
 

@@ -4,7 +4,7 @@ namespace LlewellynKevin\RaygunLogger\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
-use LlewellynKevin\RaygunLogger\RaygunLoggerFacade;
+use LlewellynKevin\RaygunLogger\Facades\RaygunLogger;
 
 class TestException extends Command
 {
@@ -27,7 +27,7 @@ class TestException extends Command
                 $this->info('✓ Found Raygun key');
             }
 
-            $response = RaygunLoggerFacade::handle(
+            $response = RaygunLogger::handle(
                 $this->generateException()
             );
 

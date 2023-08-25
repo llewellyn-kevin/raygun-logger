@@ -3,13 +3,13 @@
 namespace LlewellynKevin\RaygunLogger;
 
 use Illuminate\Support\ServiceProvider;
-use LlewellynKevin\RaygunLogger\Contracts\RaygunMetaService;
 use LlewellynKevin\RaygunLogger\Http\Client;
 use LlewellynKevin\RaygunLogger\Loggers\RaygunHandler;
 use LlewellynKevin\RaygunLogger\Services\MetaService;
 use LlewellynKevin\RaygunLogger\Commands\TestException;
+use LlewellynKevin\RaygunLogger\Contracts\RaygunMetaServiceContract;
+use LlewellynKevin\RaygunLogger\Http\RaygunClient;
 use Monolog\Logger;
-use Raygun4php\RaygunClient;
 use Raygun4php\Transports\GuzzleAsync;
 
 class RaygunLoggerServiceProvider extends ServiceProvider
@@ -45,7 +45,7 @@ class RaygunLoggerServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'raygun-logger');
 
         // Bind public interfaces
-        $this->app->bind(RaygunMetaService::class, MetaService::class);
+        $this->app->bind(RaygunMetaServiceContract::class, MetaService::class);
 
         // Register the async transport.
         $this->app->singleton(GuzzleAsync::class, function ($app) {
@@ -60,7 +60,7 @@ class RaygunLoggerServiceProvider extends ServiceProvider
         // Register the main class to use with the facade
         $this->app->singleton('raygun-logger', function () {
             return new RaygunLogger(
-                $this->app->get(RaygunMetaService::class),
+                $this->app->get(RaygunMetaServiceContract::class),
                 $this->app->get(RaygunClient::class),
             );
         });

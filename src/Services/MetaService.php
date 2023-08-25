@@ -4,12 +4,12 @@ namespace LlewellynKevin\RaygunLogger\Services;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use LlewellynKevin\RaygunLogger\Contracts\RaygunMetaService;
+use LlewellynKevin\RaygunLogger\Contracts\RaygunMetaServiceContract;
 use LlewellynKevin\RaygunLogger\DataObjects\RaygunUser;
 use Monolog\Logger;
 use Throwable;
 
-class MetaService implements RaygunMetaService
+class MetaService implements RaygunMetaServiceContract
 {
     public function shouldLog(string|int $level, ?Throwable $exception = null): bool
     {

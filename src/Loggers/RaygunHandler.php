@@ -2,7 +2,7 @@
 
 namespace LlewellynKevin\RaygunLogger\Loggers;
 
-use LlewellynKevin\RaygunLogger\RaygunLogger;
+use LlewellynKevin\RaygunLogger\Contracts\RaygunLoggerContract as RaygunLogger;
 use Monolog\Logger;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\LogRecord;
@@ -27,12 +27,11 @@ class RaygunHandler extends AbstractProcessingHandler
     /**
      * @param array $record
      */
-    protected function write(LogRecord $record): void
+    protected function write(LogRecord|array $record): void
     {
-        if (isset($record->context['exception']) && $record->context['exception'] instanceof Throwable) {
-            $this->raygunLogger->handle(
-                $record->context['exception']
-            );
+        $exception = data_get($record, 'context.exception');
+        if ($exception !== null && $exception instanceof Throwable) {
+            $this->raygunLogger->handle($exception);
 
             return;
         }
